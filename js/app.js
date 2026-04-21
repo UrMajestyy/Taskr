@@ -45,7 +45,7 @@ var State = {
     this.saveCart();
     // Navigate to root index from anywhere
     var depth = window.location.pathname.split('/').filter(Boolean).length;
-    window.location.href = depth > 1 ? '../index.html' : 'index.html';
+    window.location.href = depth > 1 ? 'index.html' : 'index.html';
   }
 };
 
@@ -459,7 +459,7 @@ function handleLogin(e) {
   State.setUser(user);
   showToast('Welcome back, ' + user.name.split(' ')[0] + '! 👋', 'success');
   setTimeout(function () {
-    window.location.href = role === 'worker' ? 'dashboard.html' : '../index.html';
+    window.location.href = role === 'worker' ? 'dashboard.html' : 'index.html';
   }, 800);
 }
 
@@ -477,7 +477,7 @@ function handleRegister(e) {
   State.setUser(user);
   showToast('Account created! Welcome, ' + name.split(' ')[0] + ' 🎉', 'success');
   setTimeout(function () {
-    window.location.href = role === 'worker' ? 'dashboard.html' : '../index.html';
+    window.location.href = role === 'worker' ? 'dashboard.html' : 'index.html';
   }, 800);
 }
 
@@ -767,7 +767,7 @@ function initDashboard() {
    ============================================================ */
 function initConfirmation() {
   var booking = JSON.parse(localStorage.getItem('taskr_last_booking') || 'null');
-  if (!booking) { window.location.href = '../index.html'; return; }
+  if (!booking) { window.location.href = 'index.html'; return; }
 
   document.getElementById('conf-ref').textContent   = booking.ref;
   document.getElementById('conf-date').textContent  = booking.date;

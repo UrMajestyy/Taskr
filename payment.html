@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Taskr</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* Payment method selector */
+    .payment-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .payment-option:hover { border-color: var(--teal); background: var(--teal-faint); }
+    .payment-option.selected { border-color: var(--teal); background: var(--teal-faint); }
+
+    .payment-option input[type="radio"] { accent-color: var(--teal); width: 18px; height: 18px; flex-shrink: 0; }
+    .payment-option .po-icon { font-size: 1.6rem; }
+    .payment-option .po-label { font-weight: 600; font-size: 0.95rem; }
+    .payment-option .po-desc  { font-size: 0.82rem; color: var(--slate); }
+
+    /* Card fields (shown only when card is selected) */
+    #card-fields { display: none; margin-top: 4px; }
+    #card-fields.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Task<span>r</span></a>
+    <div id="nav-user-area" style="margin-left:auto;display:flex;gap:8px;align-items:center"></div>
+    <div class="nav-actions">
+      <a href="cart.html" class="nav-icon-btn">🛒<span class="nav-badge" id="cart-badge" style="display:none">0</span></a>
+      <span id="wishlist-badge" style="display:none"></span>
+    </div>
+  </div>
+</nav>
+
+<div style="padding-top:calc(var(--nav-h) + 40px);padding-bottom:80px;background:var(--sand);min-height:100vh">
+  <div class="container">
+
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="cart.html">Cart</a><span>/</span><span>Checkout</span></div>
+    <h1 style="font-size:2rem;margin:10px 0 28px">Checkout</h1>
+
+    <!-- Auth gate: shown to guests -->
+    <div id="auth-gate" style="display:none;background:var(--white);border-radius:var(--radius-lg);padding:48px;text-align:center;box-shadow:var(--shadow-sm)">
+      <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
+      <h3>Sign in to complete your booking</h3>
+      <p style="margin:10px 0 24px">Guests can browse freely but need an account to book.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="login.html" class="btn btn-primary">Sign in</a>
+        <a href="register.html" class="btn btn-outline">Create free account</a>
+      </div>
+    </div>
+
+    <!-- Main checkout layout (shown to logged-in customers) -->
+    <div id="checkout-layout" style="display:none;display:grid;grid-template-columns:1fr 340px;gap:32px">
+
+      <!-- LEFT: booking details + payment method -->
+      <div>
+
+        <!-- Booking details -->
+        <div class="form-card" style="margin-bottom:20px">
+          <h3 style="margin-bottom:18px">Booking details</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="book-date">Preferred date</label>
+              <input type="date" id="book-date" />
+            </div>
+            <div class="form-group">
+              <label for="book-time">Preferred time</label>
+              <select id="book-time">
+                <option>08:00 – 10:00</option>
+                <option>10:00 – 12:00</option>
+                <option>13:00 – 15:00</option>
+                <option>15:00 – 17:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="book-address">Service address</label>
+            <input type="text" id="book-address" placeholder="Street address, Suburb, City" />
+          </div>
+          <div class="form-group">
+            <label for="book-notes">Special instructions (optional)</label>
+            <textarea id="book-notes" placeholder="Any access codes or specific requests…" style="min-height:80px"></textarea>
+          </div>
+        </div>
+
+        <!-- Payment method -->
+        <div class="form-card">
+          <h3 style="margin-bottom:18px">Payment method</h3>
+
+          <div class="payment-options">
+
+            <label class="payment-option selected" id="opt-card">
+              <input type="radio" name="payment" value="card" checked />
+              <span class="po-icon">💳</span>
+              <div>
+                <div class="po-label">Credit / Debit card</div>
+                <div class="po-desc">Visa, Mastercard — secure and instant</div>
+              </div>
+            </label>
+
+            <label class="payment-option" id="opt-eft">
+              <input type="radio" name="payment" value="eft" />
+              <span class="po-icon">🏦</span>
+              <div>
+                <div class="po-label">EFT / Bank transfer</div>
+                <div class="po-desc">Pay directly from your bank account</div>
+              </div>
+            </label>
+
+            <label class="payment-option" id="opt-cash">
+              <input type="radio" name="payment" value="cash" />
+              <span class="po-icon">💵</span>
+              <div>
+                <div class="po-label">Pay cash on the day</div>
+                <div class="po-desc">Hand cash to your worker when they arrive</div>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Card fields (only shown when card is selected) -->
+          <div id="card-fields" class="visible">
+            <div style="background:var(--teal-faint);border-radius:var(--radius);padding:12px 16px;font-size:0.83rem;color:var(--slate);margin-bottom:16px">
+              </strong> Enter the 16-digit number, expiry (MM/YY), and 3-digit CVV.
+            </div>
+            <div class="form-group">
+              <label for="card-name">Cardholder name</label>
+              <input type="text" id="card-name" placeholder="Name on card" />
+            </div>
+            <div class="form-group">
+              <label for="card-number">Card number</label>
+              <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="card-expiry">Expiry</label>
+                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" />
+              </div>
+              <div class="form-group">
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" placeholder="123" maxlength="3" />
+              </div>
+            </div>
+          </div>
+
+          <!-- EFT info (shown when EFT is selected) -->
+          <div id="eft-fields" style="display:none;background:var(--light-grey);border-radius:var(--radius);padding:16px;font-size:0.88rem">
+            <div style="font-weight:600;margin-bottom:8px">Bank details</div>
+            <div style="color:var(--slate);display:flex;flex-direction:column;gap:4px">
+              <div>Bank: <strong>FNB</strong></div>
+              <div>Account name: <strong>Taskr (Pty) Ltd</strong></div>
+              <div>Account number: <strong>62XXXXXXXX</strong></div>
+              <div>Branch code: <strong>250655</strong></div>
+              <div>Reference: <strong>Your email address</strong></div>
+            </div>
+          </div>
+
+          <!-- Cash info -->
+          <div id="cash-fields" style="display:none;background:var(--light-grey);border-radius:var(--radius);padding:16px;font-size:0.88rem;color:var(--slate)">
+            💵 Please have the exact amount ready. Your worker will confirm receipt and mark the booking complete.
+          </div>
+
+        </div><!-- end form-card -->
+      </div>
+
+      <!-- RIGHT: order summary -->
+      <div>
+        <div class="order-summary" style="position:sticky;top:calc(var(--nav-h) + 20px)">
+          <h3 style="margin-bottom:20px">Order summary</h3>
+          <div id="checkout-items"></div>
+          <div style="height:1px;background:var(--border);margin:16px 0"></div>
+          <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">R0</span></div>
+          <div class="summary-row"><span>Platform fee (5%)</span><span id="co-fee">R0</span></div>
+          <div class="summary-row total"><span>Total</span><span id="co-total">R0</span></div>
+
+          <button class="btn btn-primary btn-block btn-lg" style="margin-top:24px" id="book-now-btn">
+            Book now →
+          </button>
+
+          <div style="margin-top:16px;font-size:0.82rem;color:var(--slate);display:flex;flex-direction:column;gap:6px">
+            <div>✓ Free 24h cancellation</div>
+            <div>✓ Secure booking</div>
+            <div>✓ Satisfaction guarantee</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end checkout-layout -->
+
+    <!-- Empty cart state -->
+    <div id="empty-cart" style="display:none;text-align:center;padding:80px 20px">
+      <div style="font-size:3rem;margin-bottom:12px">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p style="margin:10px 0 24px">Add a service before checking out.</p>
+      <a href="services.html" class="btn btn-primary">Browse services</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none">
+      <p>© 2026 Taskr (Pty) Ltd · Secure checkout</p>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  var user = State.currentUser;
+
+  // --- Show/hide sections based on auth state ---
+  if (!user || user.role === 'guest') {
+    document.getElementById('auth-gate').style.display = 'block';
+    document.getElementById('checkout-layout').style.display = 'none';
+    return;
+  }
+
+  if (!State.cart.length) {
+    document.getElementById('checkout-layout').style.display = 'none';
+    document.getElementById('empty-cart').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('checkout-layout').style.display = 'grid';
+
+  // --- Set default booking date to tomorrow ---
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('book-date').value = tomorrow.toISOString().split('T')[0];
+  document.getElementById('book-date').min   = tomorrow.toISOString().split('T')[0];
+
+  // --- Populate order summary ---
+  var itemsEl  = document.getElementById('checkout-items');
+  var subtotal = 0;
+
+  State.cart.forEach(function (item) {
+    subtotal += item.price;
+    var row = document.createElement('div');
+    row.className = 'summary-row';
+    row.innerHTML = '<span>' + item.icon + ' ' + item.title + '</span><span>R' + item.price + '</span>';
+    itemsEl.appendChild(row);
+  });
+
+  var fee   = Math.round(subtotal * 0.05);
+  var total = subtotal + fee;
+
+  document.getElementById('co-subtotal').textContent = 'R' + subtotal;
+  document.getElementById('co-fee').textContent      = 'R' + fee;
+  document.getElementById('co-total').textContent    = 'R' + total;
+
+  // --- Payment method toggle ---
+  var radioButtons = document.querySelectorAll('input[name="payment"]');
+  var cardFields   = document.getElementById('card-fields');
+  var eftFields    = document.getElementById('eft-fields');
+  var cashFields   = document.getElementById('cash-fields');
+
+  radioButtons.forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      // Update selected styling
+      document.querySelectorAll('.payment-option').forEach(function (opt) { opt.classList.remove('selected'); });
+      this.closest('.payment-option').classList.add('selected');
+
+      // Show/hide sub-fields
+      cardFields.style.display = this.value === 'card' ? 'block' : 'none';
+      eftFields.style.display  = this.value === 'eft'  ? 'block' : 'none';
+      cashFields.style.display = this.value === 'cash' ? 'block' : 'none';
+    });
+  });
+
+  // --- Auto-format card number (groups of 4) ---
+  var cardNumInput = document.getElementById('card-number');
+  cardNumInput.addEventListener('input', function () {
+    var digits = this.value.replace(/\D/g, '').slice(0, 16);
+    this.value  = digits.replace(/(.{4})/g, '$1 ').trim();
+  });
+
+  // --- Auto-format expiry (MM/YY) ---
+  var expiryInput = document.getElementById('card-expiry');
+  expiryInput.addEventListener('input', function () {
+    var digits = this.value.replace(/\D/g, '').slice(0, 4);
+    if (digits.length >= 3) digits = digits.slice(0, 2) + '/' + digits.slice(2);
+    this.value = digits;
+  });
+
+  // --- Book now button ---
+  document.getElementById('book-now-btn').addEventListener('click', function () {
+
+    var method = document.querySelector('input[name="payment"]:checked').value;
+
+    // Basic card validation only if card is selected
+    if (method === 'card') {
+      var num = (document.getElementById('card-number').value || '').replace(/\s/g, '');
+      var exp = document.getElementById('card-expiry').value || '';
+      var cvv = document.getElementById('card-cvv').value || '';
+      if (num.length < 16 || exp.length < 5 || cvv.length < 3) {
+        showToast('Please fill in all card details', 'error');
+        return;
+      }
+    }
+
+    // Disable button while "processing"
+    this.textContent = 'Processing…';
+    this.disabled = true;
+
+    // Save booking info so confirmation page can read it
+    var ref = 'TKR-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+    var booking = {
+      ref:     ref,
+      items:   State.cart.slice(),
+      total:   total,
+      method:  method,
+      date:    new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' })
+    };
+    localStorage.setItem('taskr_last_booking', JSON.stringify(booking));
+
+    // Clear cart
+    State.cart = [];
+    State.saveCart();
+
+    // Redirect after a short delay
+    setTimeout(function () {
+      window.location.href = 'confirmation.html';
+    }, 1800);
+  });
+
+});
+</script>
+</body>
+</html>

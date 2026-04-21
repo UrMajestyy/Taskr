@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Taskr</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Task<span>r</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-search">
+      <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="nav-search-input" placeholder="Search services…" autocomplete="off" />
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="wishlist-btn" title="Wishlist"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg><span class="nav-badge" id="wishlist-badge" style="display:none">0</span></button>
+      <a href="cart.html" class="nav-icon-btn" title="Cart">🛒<span class="nav-badge" id="cart-badge" style="display:none">0</span></a>
+      <div id="nav-user-area" style="display:flex;gap:8px;align-items:center"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-banner">
+  <div class="container">
+    <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Services</span></div>
+    <div class="label">All services</div>
+    <h1 style="font-size:2.2rem">Find your perfect match</h1>
+    <p style="margin-top:10px;max-width:500px">Every worker is ID-verified and backs their skills with real proof of past work. Browse, compare, and book with confidence.</p>
+  </div>
+</div>
+
+<section class="section-pad" style="background:var(--white)">
+  <div class="container">
+    <div class="category-pills">
+      <div class="cat-pill active" data-cat="All">All services</div>
+      <div class="cat-pill" data-cat="Cleaning">🧹 Cleaning</div>
+      <div class="cat-pill" data-cat="Gardening">🌿 Gardening</div>
+      <div class="cat-pill" data-cat="Tutoring">📚 Tutoring</div>
+      <div class="cat-pill" data-cat="Plumbing">🔧 Plumbing</div>
+      <div class="cat-pill" data-cat="Electrical">⚡ Electrical</div>
+      <div class="cat-pill" data-cat="Painting">🎨 Painting</div>
+    </div>
+    <div class="services-grid" id="services-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Task<span>r</span></div>
+        <p>Connecting South African households with skilled, verified local service providers.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">▣</a>
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">in</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Cleaning</a></li><li><a href="#">Gardening</a></li><li><a href="#">Tutoring</a></li><li><a href="#">Plumbing</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="#">Careers</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Help centre</a></li><li><a href="#">Trust & Safety</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 Taskr (Pty) Ltd</p><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+  </div>
+</footer>
+
+<div class="wishlist-overlay" id="wishlist-overlay"></div>
+<div class="wishlist-panel" id="wishlist-panel">
+  <div class="wishlist-header"><h3>Saved Services</h3><div class="wishlist-close" id="wishlist-close-btn">✕</div></div>
+  <div class="wishlist-body" id="wishlist-panel-body"></div>
+  <div class="wishlist-footer"><a href="services.html" class="btn btn-primary btn-block">Browse more</a></div>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

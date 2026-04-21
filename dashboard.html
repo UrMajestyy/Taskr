@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Taskr</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body id="dashboard-root">
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Task<span>r</span></a>
+    <div id="nav-user-area" style="margin-left:auto;display:flex;gap:8px;align-items:center"></div>
+  </div>
+</nav>
+
+<div class="dashboard-page">
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <div class="dashboard-sidebar">
+      <div style="padding:0 14px 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:16px">
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px">Worker Portal</div>
+        <div style="font-weight:600;color:white" id="sidebar-name">—</div>
+        <div style="font-size:0.78rem;color:rgba(255,255,255,0.45)">Service Provider</div>
+      </div>
+
+      <div class="sidebar-section-label">Main</div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-link active" data-section="overview">📊 Overview</div>
+        <div class="sidebar-link" data-section="bookings">📅 Bookings</div>
+        <div class="sidebar-link" data-section="earnings">💰 Earnings</div>
+      </nav>
+
+      <div class="sidebar-section-label">My Profile</div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-link" data-section="proofs">🖼 Proof of Work</div>
+        <div class="sidebar-link" data-section="profile">👤 Edit Profile</div>
+        <div class="sidebar-link" data-section="availability">📍 Availability</div>
+      </nav>
+
+      <div class="sidebar-section-label">Support</div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-link" data-section="help">❓ Help</div>
+        <div class="sidebar-link" id="logout-btn">↩ Sign out</div>
+      </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-main">
+
+      <!-- OVERVIEW -->
+      <div class="dash-section" id="section-overview">
+        <div class="dash-greeting">
+          <div class="label">Worker dashboard</div>
+          <h2>Good day, <span id="greeting-name">—</span></h2>
+          <p style="font-size:0.9rem;margin-top:6px">Here's how things are looking this week.</p>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="sc-num">12</div><div class="sc-label">This month's bookings</div><div class="sc-trend up">↑ 3 from last month</div></div>
+          <div class="stat-card"><div class="sc-num">R4,280</div><div class="sc-label">Earnings this month</div><div class="sc-trend up">↑ R640 vs last month</div></div>
+          <div class="stat-card"><div class="sc-num">4.8★</div><div class="sc-label">Average rating</div><div class="sc-trend up">Top 15% of workers</div></div>
+          <div class="stat-card"><div class="sc-num">94%</div><div class="sc-label">Completion rate</div><div class="sc-trend up">Excellent standing</div></div>
+        </div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header">
+            <h3>Upcoming bookings</h3>
+            <button class="btn btn-ghost btn-sm" id="view-all-btn">View all</button>
+          </div>
+          <!-- JS fills this in -->
+          <div id="upcoming-bookings-list"></div>
+        </div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header"><h3>Tips to grow your bookings</h3></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="background:var(--teal-faint);border-radius:var(--radius);padding:16px">
+              <div style="font-size:1.3rem;margin-bottom:8px">📸</div>
+              <div style="font-weight:600;font-size:0.9rem;margin-bottom:4px">Upload more proof</div>
+              <div style="font-size:0.82rem;color:var(--slate)">Workers with 3+ before/after photos get 40% more bookings.</div>
+            </div>
+            <div style="background:var(--sand);border-radius:var(--radius);padding:16px">
+              <div style="font-size:1.3rem;margin-bottom:8px">⭐</div>
+              <div style="font-weight:600;font-size:0.9rem;margin-bottom:4px">Ask for reviews</div>
+              <div style="font-size:0.82rem;color:var(--slate)">After each job, remind customers to leave a rating on Taskr.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKINGS -->
+      <div class="dash-section" id="section-bookings" style="display:none">
+        <div class="dash-greeting">
+          <h2>Bookings</h2>
+          <p style="font-size:0.9rem;margin-top:6px">Your confirmed and pending service bookings.</p>
+        </div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header">
+            <h3>All bookings</h3>
+            <div style="display:flex;gap:8px">
+              <span class="chip chip-green">6 Confirmed</span>
+              <span class="chip chip-yellow">2 Pending</span>
+            </div>
+          </div>
+          <!-- JS fills this in -->
+          <div id="all-bookings-list"></div>
+        </div>
+      </div>
+
+      <!-- EARNINGS -->
+      <div class="dash-section" id="section-earnings" style="display:none">
+        <div class="dash-greeting"><h2>Earnings</h2></div>
+        <div class="stat-cards" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="stat-card"><div class="sc-num">R4,280</div><div class="sc-label">This month</div></div>
+          <div class="stat-card"><div class="sc-num">R3,640</div><div class="sc-label">Last month</div></div>
+          <div class="stat-card"><div class="sc-num">R31,200</div><div class="sc-label">Total lifetime</div></div>
+        </div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header"><h3>Recent payouts</h3></div>
+          <!-- JS fills this in -->
+          <div id="payouts-list"></div>
+        </div>
+      </div>
+
+      <!-- PROOFS -->
+      <div class="dash-section" id="section-proofs" style="display:none">
+        <div class="dash-greeting">
+          <h2>Proof of Work</h2>
+          <p style="font-size:0.9rem;margin-top:6px">Upload before/after photos so customers can see what you're capable of.</p>
+        </div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header"><h3>Upload new proof</h3></div>
+          <div class="upload-area" id="proof-upload-area" onclick="document.getElementById('proof-file-input').click()">
+            <div class="ua-icon">📤</div>
+            <div style="font-weight:600;margin-bottom:4px">Click to upload photos or videos</div>
+            <p style="font-size:0.82rem">PNG, JPG, MP4 · Max 20MB per file</p>
+          </div>
+          <!-- Hidden real file input -->
+          <input type="file" id="proof-file-input" accept="image/*,video/*" multiple style="display:none" />
+          <!-- Preview area for newly selected files -->
+          <div id="proof-preview-area" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;"></div>
+          <div style="margin-top:24px">
+            <div style="font-weight:600;margin-bottom:14px">Your uploaded proofs</div>
+            <!-- JS fills this in -->
+            <div class="proof-item-list" id="proof-items-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT PROFILE -->
+      <div class="dash-section" id="section-profile" style="display:none">
+        <div class="dash-greeting"><h2>Edit Profile</h2></div>
+        <div class="dashboard-section">
+          <form id="profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pf-name">Full name</label>
+                <input type="text" id="pf-name" />
+              </div>
+              <div class="form-group">
+                <label for="pf-phone">Phone number</label>
+                <input type="tel" id="pf-phone" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pf-email">Email address</label>
+              <input type="email" id="pf-email" />
+            </div>
+            <div class="form-group">
+              <label for="pf-bio">Bio / introduction</label>
+              <textarea id="pf-bio" style="min-height:110px"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pf-service">Primary service</label>
+                <select id="pf-service">
+                  <option>Home Cleaning</option>
+                  <option>Gardening</option>
+                  <option>Tutoring</option>
+                  <option>Plumbing</option>
+                  <option>Electrical</option>
+                  <option>Painting</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="pf-area">Area served</label>
+                <input type="text" id="pf-area" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pf-rate">Session rate (ZAR)</label>
+              <input type="number" id="pf-rate" />
+            </div>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- AVAILABILITY -->
+      <div class="dash-section" id="section-availability" style="display:none">
+        <div class="dash-greeting"><h2>Availability</h2></div>
+        <div class="dashboard-section">
+          <div class="dashboard-section-header"><h3>Set your working days</h3></div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:24px" id="days-grid">
+            <!-- JS fills this in -->
+          </div>
+          <div style="font-weight:600;margin-bottom:14px">Working hours</div>
+          <div class="form-row" style="max-width:340px">
+            <div class="form-group">
+              <label>Start time</label>
+              <select id="time-start">
+                <option>07:00</option><option selected>08:00</option><option>09:00</option><option>10:00</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>End time</label>
+              <select id="time-end">
+                <option>16:00</option><option>17:00</option><option selected>18:00</option><option>19:00</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="save-avail-btn">Save availability</button>
+        </div>
+      </div>
+
+      <!-- HELP -->
+      <div class="dash-section" id="section-help" style="display:none">
+        <div class="dash-greeting"><h2>Help &amp; Support</h2></div>
+        <div class="dashboard-section">
+          <h3 style="margin-bottom:16px">Frequently asked questions</h3>
+          <!-- JS fills this in -->
+          <div id="faq-list"></div>
+          <div style="margin-top:20px">
+            <a href="contact.html" class="btn btn-outline">Contact support team</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  var fileInput   = document.getElementById('proof-file-input');
+  var previewArea = document.getElementById('proof-preview-area');
+  var proofList   = document.getElementById('proof-items-list');
+
+  if (!fileInput) return;
+
+  fileInput.addEventListener('change', function () {
+    var files = Array.from(this.files);
+    if (!files.length) return;
+
+    files.forEach(function (file) {
+      var isVideo = file.type.startsWith('video/');
+
+      // ── Thumbnail preview ──
+      var preview = document.createElement('div');
+      preview.style.cssText = 'position:relative;width:100px;height:100px;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);flex-shrink:0;';
+
+      if (isVideo) {
+        var vid = document.createElement('video');
+        vid.src = URL.createObjectURL(file);
+        vid.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+        vid.muted = true;
+        preview.appendChild(vid);
+      } else {
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+        img.alt = file.name;
+        preview.appendChild(img);
+      }
+
+      var removeBtn = document.createElement('button');
+      removeBtn.textContent = '\u2715';
+      removeBtn.style.cssText = 'position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.55);color:white;border:none;cursor:pointer;font-size:0.7rem;line-height:1;';
+      removeBtn.addEventListener('click', function () { preview.remove(); listItem.remove(); });
+      preview.appendChild(removeBtn);
+      previewArea.appendChild(preview);
+
+      // ── List entry ──
+      var listItem = document.createElement('div');
+      listItem.className = 'proof-item';
+
+      var thumb = document.createElement('div');
+      thumb.className = 'pi-thumb';
+      thumb.textContent = isVideo ? '\ud83c\udfa5' : '\ud83d\udcf8';
+
+      var info = document.createElement('div');
+      var nameEl = document.createElement('div');
+      nameEl.className = 'pi-name';
+      nameEl.textContent = file.name;
+      var typeEl = document.createElement('div');
+      typeEl.className = 'pi-type';
+      typeEl.textContent = (isVideo ? 'Video' : 'Photo') + ' \u00b7 ' + (file.size / 1024).toFixed(0) + ' KB';
+      info.appendChild(nameEl);
+      info.appendChild(typeEl);
+
+      var actions = document.createElement('div');
+      actions.className = 'pi-actions';
+      var delBtn = document.createElement('button');
+      delBtn.className = 'pi-btn del';
+      delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', function () {
+        listItem.remove();
+        preview.remove();
+        showToast('Proof deleted', 'info');
+      });
+      actions.appendChild(delBtn);
+
+      listItem.appendChild(thumb);
+      listItem.appendChild(info);
+      listItem.appendChild(actions);
+
+      proofList.insertBefore ? proofList.insertBefore(listItem, proofList.firstChild) : proofList.appendChild(listItem);
+    });
+
+    showToast(files.length + ' file' + (files.length > 1 ? 's' : '') + ' uploaded \u2713', 'success');
+    fileInput.value = '';
+  });
+
+});
+</script>
+</body>
+</html>

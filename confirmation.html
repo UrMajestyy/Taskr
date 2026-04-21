@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmed — Taskr</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body id="confirmation-root">
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Task<span>r</span></a>
+    <div id="nav-user-area" style="margin-left:auto;display:flex;gap:8px;align-items:center"></div>
+    <div class="nav-actions">
+      <a href="cart.html" class="nav-icon-btn">🛒<span class="nav-badge" id="cart-badge" style="display:none">0</span></a>
+      <span id="wishlist-badge" style="display:none"></span>
+    </div>
+  </div>
+</nav>
+
+<div class="thankyou-page">
+  <div style="padding:20px;width:100%;display:flex;justify-content:center">
+    <div class="thankyou-card">
+      <div class="ty-check">✓</div>
+      <div class="label" style="margin-bottom:8px">Booking confirmed</div>
+      <h2 style="margin-bottom:8px">You're all set!</h2>
+      <p>Your booking has been placed and your worker has been notified. You'll receive an SMS and email shortly.</p>
+
+      <div class="ty-booking-ref">
+        <div style="font-size:0.78rem;color:var(--slate);margin-bottom:6px">Booking reference</div>
+        <div class="ty-ref-num" id="conf-ref">TKR-XXXXXXXX</div>
+      </div>
+
+      <ul class="ty-details" id="conf-items" style="margin-bottom:16px"></ul>
+
+      <div style="background:var(--light-grey);border-radius:var(--radius);padding:16px;font-size:0.88rem;display:flex;flex-direction:column;gap:8px;text-align:left;margin-bottom:24px">
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Date confirmed</span><span id="conf-date" style="font-weight:600">—</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Amount charged</span><span id="conf-total" style="font-weight:600;color:var(--teal)">—</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--slate)">Payment method</span><span style="font-weight:600">Card</span></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a href="../index.html" class="btn btn-primary btn-block">Back to home</a>
+        <a href="services.html" class="btn btn-outline btn-block">Book another service</a>
+      </div>
+
+      <div style="margin-top:24px;font-size:0.82rem;color:var(--slate)">
+        Questions? <a href="contact.html" style="color:var(--teal)">Contact our support team</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>
